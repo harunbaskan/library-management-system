@@ -1,146 +1,74 @@
-# Library Management System
+Library Management System
+Backend REST API for a library system. Built with Spring Boot and MySQL.
+About
+I built this to learn Spring Boot and practice building a proper backend project. It's a library system where you can add books, register members, and handle borrowing/returning.
+Main features:
 
-A RESTful API for managing library operations built with Spring Boot and MySQL.
+Book management (add, update, delete, search)
+Member registration with 3 membership types
+Borrow/return system with due dates
+Overdue tracking and fine calculation
+Different borrow limits per membership (Standard: 3, Student: 5, Premium: 7)
 
-## About
+Tech
 
-This system handles core library operations: managing books, member registrations, and the borrowing/returning process. It includes features like overdue tracking, fine calculation, and search functionality.
+Java 17
+Spring Boot 3.2
+Spring Data JPA
+MySQL
+JUnit 5 + Mockito
+Maven
 
-## Tech Stack
-
-- **Java 17**
-- **Spring Boot 3.2**
-- **Spring Data JPA** - ORM and database access
-- **MySQL** - production database
-- **H2** - in-memory database for tests
-- **Maven** - dependency management
-- **JUnit 5 & Mockito** - unit and integration testing
-
-## Features
-
-- CRUD operations for books and members
-- Book borrowing and returning with validation
-- Overdue tracking and automatic fine calculation
-- Search books by keyword, genre, or availability
-- Member borrow limits based on membership type (Standard: 3, Student: 5, Premium: 7)
-- Soft delete for members (deactivate/activate)
-- Input validation with descriptive error messages
-- Global exception handling with consistent error responses
-
-## Project Structure
-```
+Project Structure
 src/main/java/com/libraryapp/
-├── model/          # Entity classes (Book, Member, BorrowRecord)
-├── repository/     # Spring Data JPA repositories
-├── service/        # Business logic layer
-├── controller/     # REST API endpoints
-├── dto/            # Data Transfer Objects (request/response)
-├── exception/      # Custom exceptions and global handler
-└── config/         # Configuration classes
-```
+├── model/        # Database entities
+├── repository/   # Data access layer
+├── service/      # Business logic
+├── controller/   # API endpoints
+├── dto/          # Request/Response objects
+└── exception/    # Error handling
+API
+Books - /api/books
 
-## API Endpoints
+POST /api/books - add book
+GET /api/books - get all
+GET /api/books/{id} - get by id
+PUT /api/books/{id} - update
+DELETE /api/books/{id} - delete
+GET /api/books/search?keyword=java - search
+GET /api/books/genre/TECHNOLOGY - filter by genre
+GET /api/books/available - available only
 
-### Books
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/books` | Add a new book |
-| GET | `/api/books` | Get all books |
-| GET | `/api/books/{id}` | Get book by ID |
-| PUT | `/api/books/{id}` | Update a book |
-| DELETE | `/api/books/{id}` | Delete a book |
-| GET | `/api/books/search?keyword=` | Search by title/author |
-| GET | `/api/books/genre/{genre}` | Filter by genre |
-| GET | `/api/books/available` | Get available books |
+Members - /api/members
 
-### Members
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/members` | Register a member |
-| GET | `/api/members` | Get all members |
-| GET | `/api/members/{id}` | Get member by ID |
-| PUT | `/api/members/{id}` | Update member info |
-| PATCH | `/api/members/{id}/deactivate` | Deactivate member |
-| PATCH | `/api/members/{id}/activate` | Reactivate member |
-| GET | `/api/members/search?name=` | Search by name |
-| GET | `/api/members/overdue` | Members with overdue books |
+POST /api/members - register
+GET /api/members - get all
+GET /api/members/{id} - get by id
+PUT /api/members/{id} - update
+PATCH /api/members/{id}/deactivate - deactivate
+PATCH /api/members/{id}/activate - activate
+GET /api/members/search?name=alice - search
 
-### Borrowing
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/borrows` | Borrow a book |
-| PATCH | `/api/borrows/{id}/return` | Return a book |
-| GET | `/api/borrows/{id}` | Get borrow record |
-| GET | `/api/borrows/member/{id}` | Member's borrow history |
-| GET | `/api/borrows/member/{id}/active` | Member's active borrows |
-| GET | `/api/borrows/overdue` | All overdue records |
-| GET | `/api/borrows/active` | All active borrows |
+Borrowing - /api/borrows
 
-## Setup & Run
+POST /api/borrows - borrow a book
+PATCH /api/borrows/{id}/return - return
+GET /api/borrows/member/{id} - member history
+GET /api/borrows/overdue - overdue list
+GET /api/borrows/active - active borrows
 
-### Prerequisites
-- Java 17+
-- Maven 3.8+
-- MySQL 8.0+
+Setup
 
-### Database Setup
-```sql
-CREATE DATABASE library_db;
-```
+Create database:
 
-### Configuration
-Update `src/main/resources/application.properties` with your MySQL credentials:
-```properties
-spring.datasource.username=your_username
-spring.datasource.password=your_password
-```
+sqlCREATE DATABASE library_db;
 
-### Build & Run
-```bash
-mvn clean install
-mvn spring-boot:run
-```
+Edit application.properties with your MySQL password
+Run:
 
-The API will be available at `http://localhost:8080`
+bashmvn spring-boot:run
 
-### Run Tests
-```bash
-mvn test
-```
+Open http://localhost:8080/api/books
 
-## Example Requests
-
-### Create a Book
-```bash
-curl -X POST http://localhost:8080/api/books \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Clean Code",
-    "author": "Robert C. Martin",
-    "isbn": "9780132350884",
-    "genre": "TECHNOLOGY",
-    "totalCopies": 3,
-    "description": "A handbook of agile software craftsmanship"
-  }'
-```
-
-### Borrow a Book
-```bash
-curl -X POST http://localhost:8080/api/borrows \
-  -H "Content-Type: application/json" \
-  -d '{
-    "bookId": 1,
-    "memberId": 1,
-    "notes": "Requested for study group"
-  }'
-```
-
-### Return a Book
-```bash
-curl -X PATCH http://localhost:8080/api/borrows/1/return
-```
-
-## License
-
-This project is for educational purposes.
-```
+Tests
+bashmvn test
