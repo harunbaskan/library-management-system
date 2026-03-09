@@ -1,0 +1,18 @@
+INSERT INTO books (title, author, isbn, published_date, genre, total_copies, available_copies, description) VALUES
+                                                                                                                ('Clean Code', 'Robert C. Martin', '9780132350884', '2008-08-01', 'TECHNOLOGY', 3, 3, 'A handbook of agile software craftsmanship'),
+                                                                                                                ('Design Patterns', 'Erich Gamma', '9780201633610', '1994-10-21', 'TECHNOLOGY', 2, 2, 'Elements of reusable object-oriented software'),
+                                                                                                                ('The Pragmatic Programmer', 'David Thomas', '9780135957059', '2019-09-13', 'TECHNOLOGY', 4, 4, 'Your journey to mastery'),
+                                                                                                                ('To Kill a Mockingbird', 'Harper Lee', '9780061120084', '1960-07-11', 'FICTION', 5, 5, 'A classic of modern American literature'),
+                                                                                                                ('1984', 'George Orwell', '9780451524935', '1949-06-08', 'FICTION', 3, 3, 'A dystopian social science fiction novel'),
+                                                                                                                ('Sapiens', 'Yuval Noah Harari', '9780062316097', '2011-01-01', 'HISTORY', 2, 2, 'A brief history of humankind'),
+                                                                                                                ('Thinking, Fast and Slow', 'Daniel Kahneman', '9780374533557', '2011-10-25', 'SCIENCE', 3, 3, 'How the two systems of thinking shape our judgments'),
+                                                                                                                ('Head First Java', 'Kathy Sierra', '9780596009205', '2005-02-09', 'TECHNOLOGY', 3, 3, 'A brain-friendly guide to Java programming'),
+                                                                                                                ('Effective Java', 'Joshua Bloch', '9780134685991', '2018-01-06', 'TECHNOLOGY', 2, 2, 'Best practices for the Java platform');
+
+INSERT INTO members (first_name, last_name, email, phone_number, membership_date, membership_type, active) VALUES
+                                                                                                               ('Alice', 'Johnson', 'alice.johnson@email.com', '555-0101', '2024-01-15', 'PREMIUM', true),
+                                                                                                               ('Bob', 'Smith', 'bob.smith@email.com', '555-0102', '2024-02-20', 'STANDARD', true),
+                                                                                                               ('Carol', 'Williams', 'carol.w@email.com', '555-0103', '2024-03-10', 'STUDENT', true),
+                                                                                                               ('David', 'Brown', 'david.b@email.com', '555-0104', '2024-04-05', 'STANDARD', true),
+                                                                                                               ('Emma', 'Davis', 'emma.davis@email.com', '555-0105', '2024-05-12', 'STUDENT', true);
+```
