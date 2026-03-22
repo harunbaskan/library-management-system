@@ -1,0 +1,413 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+		"name": "Library Management System",
+		"description": "REST API collection for Library Management System.\n\nBase URL: http://localhost:8080\n\nThis collection covers all endpoints for managing books, members, and borrowing operations.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		}
+	],
+	"item": [
+		{
+			"name": "Books",
+			"description": "CRUD operations and search for books",
+			"item": [
+				{
+					"name": "Create Book",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Clean Code\",\n    \"author\": \"Robert C. Martin\",\n    \"isbn\": \"9780132350884\",\n    \"publishedDate\": \"2008-08-01\",\n    \"genre\": \"TECHNOLOGY\",\n    \"totalCopies\": 3,\n    \"description\": \"A handbook of agile software craftsmanship\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/books",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "books"]
+						},
+						"description": "Creates a new book in the library catalog. Returns 201 Created on success, 409 Conflict if ISBN already exists."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Book by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/books/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "books", "1"]
+						},
+						"description": "Retrieves a single book by its ID. Returns 404 if not found."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/books",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "books"]
+						},
+						"description": "Retrieves all books in the library catalog."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Book",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Clean Code: Updated Edition\",\n    \"author\": \"Robert C. Martin\",\n    \"isbn\": \"9780132350884\",\n    \"publishedDate\": \"2008-08-01\",\n    \"genre\": \"TECHNOLOGY\",\n    \"totalCopies\": 5,\n    \"description\": \"Updated description for the handbook\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/books/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "books", "1"]
+						},
+						"description": "Updates an existing book. Returns 404 if not found, 409 if new ISBN conflicts."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Book",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/books/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "books", "1"]
+						},
+						"description": "Deletes a book from the catalog. Returns 204 No Content on success."
+					},
+					"response": []
+				},
+				{
+					"name": "Search Books by Keyword",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/books/search?keyword=clean",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "books", "search"],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "clean"
+								}
+							]
+						},
+						"description": "Searches books by title or author containing the keyword (case-insensitive)."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Books by Genre",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/books/genre/TECHNOLOGY",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "books", "genre", "TECHNOLOGY"]
+						},
+						"description": "Filters books by genre. Available genres: FICTION, NON_FICTION, SCIENCE, TECHNOLOGY, HISTORY, BIOGRAPHY, FANTASY, MYSTERY, ROMANCE, SELF_HELP, PHILOSOPHY, POETRY, CHILDREN, OTHER"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Available Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/books/available",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "books", "available"]
+						},
+						"description": "Retrieves all books that have at least one available copy."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Members",
+			"description": "Member registration, management, and search",
+			"item": [
+				{
+					"name": "Create Member",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"email\": \"john.doe@example.com\",\n    \"phoneNumber\": \"+905551234567\",\n    \"membershipType\": \"STANDARD\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/members",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "members"]
+						},
+						"description": "Registers a new library member. Membership types: STANDARD (3 books), STUDENT (5 books), PREMIUM (7 books). Returns 409 if email already exists."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Member by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/members/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "members", "1"]
+						},
+						"description": "Retrieves a member by ID, including their active borrow count and borrow limit."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Members",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/members",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "members"]
+						},
+						"description": "Retrieves all registered members."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Member",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"email\": \"john.updated@example.com\",\n    \"phoneNumber\": \"+905559876543\",\n    \"membershipType\": \"PREMIUM\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/members/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "members", "1"]
+						},
+						"description": "Updates member details. Returns 409 if new email conflicts with another member."
+					},
+					"response": []
+				},
+				{
+					"name": "Deactivate Member",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/members/1/deactivate",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "members", "1", "deactivate"]
+						},
+						"description": "Deactivates a member account. Deactivated members cannot borrow books."
+					},
+					"response": []
+				},
+				{
+					"name": "Activate Member",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/members/1/activate",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "members", "1", "activate"]
+						},
+						"description": "Reactivates a deactivated member account."
+					},
+					"response": []
+				},
+				{
+					"name": "Search Members by Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/members/search?name=john",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "members", "search"],
+							"query": [
+								{
+									"key": "name",
+									"value": "john"
+								}
+							]
+						},
+						"description": "Searches members by first or last name (case-insensitive)."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Members with Overdue Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/members/overdue",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "members", "overdue"]
+						},
+						"description": "Retrieves all members who currently have overdue books."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Borrowing",
+			"description": "Book borrowing and returning operations",
+			"item": [
+				{
+					"name": "Borrow Book",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"bookId\": 1,\n    \"memberId\": 1,\n    \"notes\": \"First borrow\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/borrows",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "borrows"]
+						},
+						"description": "Creates a new borrow record. Due date is automatically set to 14 days from today. Returns 400 if book is unavailable or member has reached their borrow limit."
+					},
+					"response": []
+				},
+				{
+					"name": "Return Book",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/borrows/1/return",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "borrows", "1", "return"]
+						},
+						"description": "Returns a borrowed book. Fine is automatically calculated if overdue ($0.50 per day)."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Borrow Record",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/borrows/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "borrows", "1"]
+						},
+						"description": "Retrieves a specific borrow record by ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Member Borrow History",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/borrows/member/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "borrows", "member", "1"]
+						},
+						"description": "Retrieves the complete borrow history for a specific member."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Member Active Borrows",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/borrows/member/1/active",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "borrows", "member", "1", "active"]
+						},
+						"description": "Retrieves only the currently active (not returned) borrows for a member."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Overdue Records",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/borrows/overdue",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "borrows", "overdue"]
+						},
+						"description": "Retrieves all overdue borrow records across all members."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Active Borrows",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/borrows/active",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "borrows", "active"]
+						},
+						"description": "Retrieves all currently active (not returned) borrow records."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
